@@ -1,29 +1,25 @@
-
-
-def getClique(U, arr):
-    masterArr = []
+masterArr = []
+arr = []
+def getClique(U, arr, m):
+    
+    print U
     if(len(U) == 0):
-        masterArr.append(arr)
-        #return arr
+        masterArr.append(arr);
+        #if (len(arr) > max):
+        #    print "max updated"
+        #    max = len(arr)
+        #    masterArr.append(arr)
+            
     while (len(U) != 0):
-   	v = min(U)
+        #if (len(V)+len(arr) <= m):
+        #    print "returned early"
+        #    return
+    	v = max(U)
     	arr.append(v)
     	U.remove(v)
-    	return getClique(list(set(U) & set(getAdjacent(v))), arr)
-    return masterArr
+    	return getClique(list(set(U) & set(getAdjacent(v))), arr, m)
+    #return masterArr
 
-#def getClique(U, arr):
-#    masterArr = []
-#    for v in U:
-#        V = U
-#        arr.append(v)
-#        V.remove(v)
-#        if (len(V) == 0):
-#            return arr
-#        masterArr.append(getClique(list(set(V) & set(getAdjacent(v), arr))
-#        return getClique(list(set(V) & set(getAdjacent(v))), arr)
-#    return masterArr
-	
 def getAdjacent(v):
     adjacent = []
     edges = open("edges_world_1.clq","r")
@@ -45,34 +41,6 @@ def getNodes(fileName, option):
     file.close
     return arr
 
-#def solution():
-#    U = 
-#    for v in U:
-#        getClique(getNodes(fileName, option), 
+getClique(getNodes("nodes_world_1.txt","r"), arr, 0)
+print masterArr
 
-#print getNodes("nodes_world_1.txt","r")
-arr = []
-print getClique(getNodes("nodes_world_1.txt","r"), arr)
-
-#a = ['1','2','3','4','5']
-#a.remove('1')
-#print a
-#print getAdjacent("1");
-
-
-#print int('1')
-
-
-
-
-
-
-
-#def createEdges(fileName, option
-
-#createNodes("nodes_world_1.txt", "r");
-
-#nodes = openFile("nodes_world_1.txt", "r")
-#edges = openFile("edges_world_1.clq", "r")
-
-#openFile("edges_world_1.clq", "r");
