@@ -1,20 +1,19 @@
+import random
 masterArr = []
 arr = []
 def getClique(U, arr, m):
     
-    print U
+    print len(U)
     if(len(U) == 0):
         masterArr.append(arr);
-        #if (len(arr) > max):
-        #    print "max updated"
-        #    max = len(arr)
-        #    masterArr.append(arr)
+        return
             
     while (len(U) != 0):
-        #if (len(V)+len(arr) <= m):
-        #    print "returned early"
-        #    return
-    	v = max(U)
+        if (len(U)+len(arr) <= m):
+            print "returned early"
+            return
+    	#v = max(U)
+        v = random.choice(U)
     	arr.append(v)
     	U.remove(v)
     	return getClique(list(set(U) & set(getAdjacent(v))), arr, m)
@@ -22,7 +21,7 @@ def getClique(U, arr, m):
 
 def getAdjacent(v):
     adjacent = []
-    edges = open("edges_world_1.clq","r")
+    edges = open("edges_world_2a.clq","r")
     edges.readline()
     for line in edges:
         tempArr = line.split(" ")
@@ -41,6 +40,6 @@ def getNodes(fileName, option):
     file.close
     return arr
 
-getClique(getNodes("nodes_world_1.txt","r"), arr, 0)
+getClique(getNodes("nodes_world_2a.txt","r"), arr, 0)
 print masterArr
 
