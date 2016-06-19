@@ -1,9 +1,24 @@
-import sys
-sys.setrecursionlimit(15000)
+#import sys
+#sys.setrecursionlimit(15000)
 masterArr = []
 arr = []
 adjacent = []
+costTable = []
 
+def getCost(clique):
+    cost = 0
+    for n in clique:
+        for c in costTable:
+            if costTable.index(c) == n:
+                print c[1]
+                if c[1] == 'Email':
+                    cost = cost + 0.80
+                elif c[1]  == 'Phone':
+                    cost = cost + 1
+                elif c[1] == 'Overbond':
+                    cost = cost + 0.5
+            #print cost
+    return cost/2
 
 def getClique(U, arr, isFirstCall):
     if(len(U) == 0):
@@ -28,6 +43,7 @@ def initAdjacent():
     a = max(W)
     while (a >= 0): 
         adjacent.append([])
+        costTable.append([])
         a -= 1
     #print(len(adjacent))
 
@@ -37,6 +53,9 @@ def populateAdjacent():
         tempArr = line.split(" ")
         adjacent[int(tempArr[1])].append(int(tempArr[2]))
         adjacent[int(tempArr[2])].append(int(tempArr[1]))
+
+        costTable[int(tempArr[1])].append([tempArr[2],tempArr[3]])
+        costTable[int(tempArr[2])].append([tempArr[1],tempArr[3]])
         #if (not(int(tempArr[2]) in adjacent[int(tempArr[1])])):
         #    adjacent[int(tempArr[1])].append(int(tempArr[2]))
         #elif (not(int(tempArr[1]) in adjacent[int(tempArr[2])])):
@@ -89,9 +108,14 @@ V = getNodes("nodes_world_2b.txt","r")
 getClique(V, arr, True)
 print masterArr
 print len(masterArr[0])
-#print getMax(V)
 
+fr = open("nodes_world_2b.txt","r");
+f = open("result.txt", "w")
+for line in fr:
+    tempArr = line.split(" ")
+    if int(tempArr[0]) in masterArr[0]:
+        f.write(line)
+fr.close()
+f.close()
 
-
-#T = [[1,2,3],[4,5,2],[6,5,4,2],[1,2]]
-#print getMax(T)
+#print getCost(masterArr[0])
