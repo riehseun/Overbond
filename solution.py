@@ -25,8 +25,12 @@ def getClique(U, arr, isFirstCall):
 
 def initAdjacent():
     W = getNodes("nodes_world_2b.txt","r")
-    for w in W:
+    a = max(W)
+    while (a >= 0): 
         adjacent.append([])
+        a -= 1
+    #print(len(adjacent))
+
 
 def populateAdjacent():
     for line in edges:
@@ -81,7 +85,7 @@ def getMax(I):
 
 initAdjacent()
 populateAdjacent()
-V = getNodes("nodes_world_2a.txt","r")
+V = getNodes("nodes_world_2b.txt","r")
 getClique(V, arr, True)
 print masterArr
 print len(masterArr[0])
