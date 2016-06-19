@@ -1,33 +1,46 @@
-import random
+import sys
+sys.setrecursionlimit(15000)
 masterArr = []
 arr = []
-def getClique(U, arr, m):
-    
-    print len(U)
+adjacent = []
+
+
+def getClique(U, arr, isFirstCall):
     if(len(U) == 0):
-        masterArr.append(arr);
+        print "U is equal to 0"
+        if arr not in masterArr:
+            masterArr.append(arr)
         return
             
-    while (len(U) != 0):
-        if (len(U)+len(arr) <= m):
-            print "returned early"
-            return
-    	#v = max(U)
-        v = random.choice(U)
+    while (len(U) > 0):
+        #print U
+        if(isFirstCall == True):
+            v = getMax(U)
+        else:
+            v = min(U)
+        #print v
     	arr.append(v)
     	U.remove(v)
-    	return getClique(list(set(U) & set(getAdjacent(v))), arr, m)
-    #return masterArr
+        return getClique(list(set(U) & set(getAdjacent(v))), arr, False)
 
-def getAdjacent(v):
-    adjacent = []
-    edges = open("edges_world_2a.clq","r")
-    edges.readline()
+def initAdjacent():
+    W = getNodes("nodes_world_2b.txt","r")
+    for w in W:
+        adjacent.append([])
+
+def populateAdjacent():
     for line in edges:
         tempArr = line.split(" ")
-        if (int(tempArr[1]) == v and not(int(tempArr[2]) in adjacent)):
-            adjacent.append(int(tempArr[2]))
+        adjacent[int(tempArr[1])].append(int(tempArr[2]))
+        adjacent[int(tempArr[2])].append(int(tempArr[1]))
+        #if (not(int(tempArr[2]) in adjacent[int(tempArr[1])])):
+        #    adjacent[int(tempArr[1])].append(int(tempArr[2]))
+        #elif (not(int(tempArr[1]) in adjacent[int(tempArr[2])])):
+        #    adjacent[int(tempArr[2])].append(int(tempArr[1]))
     return adjacent
+
+def getAdjacent(v):
+    return adjacent[v]
 
 def getNodes(fileName, option):
     arr = []
@@ -37,9 +50,44 @@ def getNodes(fileName, option):
         tempArr = line.split(" ")
         arr.append(int(tempArr[0]))
      
-    file.close
     return arr
 
-getClique(getNodes("nodes_world_2a.txt","r"), arr, 0)
-print masterArr
+def openFile(f):
+    global edges
+    edges = []
+    #f.readline()
+    for e in f:
+        edges.append(e)
+    return edges
+with open("edges_world_2b.clq","r") as f:
+    edges = openFile(f)
+    #print(edges)
 
+def getMax(I):
+    m = -1
+    file = open("a.txt","w")
+    for ad in adjacent:
+        #file.write(str(adjacent.index(ad)))
+        #file.write(" ")
+        #file.write(str(len(ad)))
+        #file.write("\n")
+        if (len(ad) > m):
+            m = len(ad)
+            j = ad
+    return adjacent.index(j)
+
+
+
+
+initAdjacent()
+populateAdjacent()
+V = getNodes("nodes_world_2a.txt","r")
+getClique(V, arr, True)
+print masterArr
+print len(masterArr[0])
+#print getMax(V)
+
+
+
+#T = [[1,2,3],[4,5,2],[6,5,4,2],[1,2]]
+#print getMax(T)
