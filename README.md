@@ -1,6 +1,6 @@
 # Overbond
 
-Solving Maximum Clique problem with Python
+Solution to Maximum Clique problem with Python
 
 1. The algorithm first pick a node from the input file that has most edges.
 2. The node with most edges is excluded from the set of input.
